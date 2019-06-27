@@ -260,6 +260,8 @@ area_mapping = {
     "suzhou": "jiangsu",
     "lianyunhang":"jiangsu",
     "jiangsu": "jiangsu",
+    "jiaxing":"jiaxing",
+    "shijiazhuang":"shijiazhaung",
     "changzhou": "jiangsu",
     "huaian": "jiangsu",
     "taizhou":"jiangsu",
@@ -272,6 +274,6 @@ area_mapping = {
     "huizhou":"guangzhou",
     "shenzhen":"shenzhen",
     "hefei":"hefei",
-    "tianjing":"tianjing3"
+    "tianjing":"tianjing"
 
 }
