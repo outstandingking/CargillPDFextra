@@ -274,6 +274,8 @@ area_mapping = {
     "huizhou":"guangzhou",
     "shenzhen":"shenzhen",
     "hefei":"hefei",
-    "tianjing":"tianjing"
+    "tianjing":"tianjing",
+    "hanchuan":"hanchuan",
+    "langfang":"langfang"
 
 }
