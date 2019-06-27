@@ -258,7 +258,7 @@ area_mapping = {
     "nanjing": "jiangsu",
     "wuxi": "jiangsu",
     "suzhou": "jiangsu",
-    "lianyunhang":"jiangsu",
+    "lianyungang":"jiangsu",
     "jiangsu": "jiangsu",
     "jiaxing":"jiaxing",
     "shijiazhuang":"shijiazhaung",
