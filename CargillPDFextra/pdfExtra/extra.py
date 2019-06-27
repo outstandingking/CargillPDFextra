@@ -419,7 +419,8 @@ class Extra(object):
         sheet_entity_json['fileExtraResult'] = []
         for index, row in df.iterrows():
             row_values = row
-             if cls.check_is_entity(row_values, 0):
+            print(row_values)
+            if cls.check_is_entity(row_values, 0):
                 entity_json_month = {}
                 e_value = str(row_values[0].replace(" ", "").replace("\r", ""))
                 entity_key = cls.entity_pair_setting.get(e_value, e_value)
