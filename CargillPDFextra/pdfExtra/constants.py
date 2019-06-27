@@ -266,7 +266,7 @@ area_mapping = {
     "huaian": "jiangsu",
     "taizhou":"jiangsu",
     "yangzhou":"jiangsu",
-    "zhengjiang":"jiangsu",
+    "zhenjiang":"jiangsu",
     'guangdong': "guangzhou",
     "dongwan":"guangzhou",
     "shantou":"guangzhou",
