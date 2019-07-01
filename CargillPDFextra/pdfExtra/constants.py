@@ -276,6 +276,16 @@ area_mapping = {
     "hefei":"hefei",
     "tianjing":"tianjing",
     "hanchuan":"hanchuan",
-    "langfang":"langfang"
+    "langfang":"langfang",
+    "zhangzhou":"zhangzhou",
+    "nanning":"nanning",
+    "foshan":"guangzhou",
+    "guangxi":"guangxi",
+    "changsha":"changsha",
+    "chongqing":"chongqing",
+    "kunming":"kunming",
+    "baotou":"baotou",
+    "xinjiang":"xinjiang"
+
 
 }
