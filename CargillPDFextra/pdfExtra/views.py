@@ -15,6 +15,7 @@ def vat_pdf_extra(request):
     data = request.data
 
     type = data.get('type', None)
+
     try:
         type = constants.area_mapping[type]
 
@@ -26,11 +27,14 @@ def vat_pdf_extra(request):
     if format is None:
         return Response(data={'error': 'format 不可为空。可选VAT，VAT1，VAT2'}, status=status.HTTP_400_BAD_REQUEST)
 
+    file = data.get('file', None)
+    # 兼容PDF和pdf
+    file.name = file.name.replace('PDF', 'pdf')
 
 
     try:
         pdfExtra = PdfExtraModel.objects.create(type=type, format=format, file=data.get('file'))
-        remove_columns = [ ]
+        remove_columns = []
         remove_rows = []
         entity_pair_setting = constants.vat_entity_map
 
