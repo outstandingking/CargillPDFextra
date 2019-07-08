@@ -103,7 +103,7 @@ class Extra(object):
 
     def format_value(self, value):
         if type(value) is float:
-            return value
+            return str(value)
         try:
             value = str(float(value.replace(",", "")))
             return value
