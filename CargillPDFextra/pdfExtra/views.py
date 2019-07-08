@@ -30,9 +30,9 @@ def vat_pdf_extra(request):
     file = data.get('file', None)
     # 兼容PDF和pdf
     file.name = file.name.lower()
-    if '.excel' or '.xls' in file.name:
+    if '.excel' in file.name or '.xls' in file.name:
         file_type = 'excel'
-    else:
+    if '.pdf' or '.PDF' in file.name:
         file_type = 'pdf'
 
     try:
