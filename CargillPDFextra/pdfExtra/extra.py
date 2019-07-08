@@ -67,9 +67,10 @@ class Extra(object):
                 if (row_values[index] is not None and \
                     not isinstance(row_values[index], float)) and \
                         (row_values[index] is not None and len(row_values[index]) is not 0):
-                    if row_values[index] not in self.remove_columns:
+                    # if row_values[index] not in self.remove_columns:
                         try:
-                            float(row_values[index + 1].replace(',', ''))
+                            row_values[index] = row_values[index].replace(' ',"").replace('　',"")
+                            float(str(row_values[index + 1]).replace(',', ''))
                             return True
                         except:
                             row_values[index + 1] = 0
@@ -101,6 +102,8 @@ class Extra(object):
         return str
 
     def format_value(self, value):
+        if type(value) is float:
+            return value
         try:
             value = str(float(value.replace(",", "")))
             return value
@@ -414,6 +417,92 @@ class Extra(object):
                       ]
         df.index = df.index + 1
         df = df.sort_index()
+        for i in cls.remove_columns:
+            df.drop(df.columns[i], axis=1, inplace=True)
+        sheet_entity_json['fileExtraResult'] = []
+        for index, row in df.iterrows():
+            row_values = row
+            print(row_values)
+            if cls.check_is_entity(row_values, 0):
+                entity_json_month = {}
+                e_value = str(row_values[0].replace(" ", "").replace("\r", ""))
+                entity_key = cls.entity_pair_setting.get(e_value, e_value)
+
+                entity_json_month = {
+                    "item_type": "normal",
+                    "key": entity_key,
+                    "value": cls.format_value(row_values[1]),
+                    "value_type": "this_month",
+
+                }
+
+                entity_json_year = {
+                    "item_type": "normal",
+                    "key": entity_key,
+                    "value": cls.format_value(row_values[2]),
+                    "value_type": "this_year"
+                }
+
+                entity_timely_json_month = {}
+
+                entity_timely_json_month = {
+                    "item_type": "timely",
+                    "key": entity_key,
+                    "value": cls.format_value(row_values[3]),
+                    "value_type": "this_month",
+
+                }
+
+                entity_timely_json_year = {}
+
+                entity_timely_json_year = {
+
+                    "item_type": "timely",
+                    "key": entity_key,
+                    "value": cls.format_value(row_values[4]),
+                    "value_type": "this_year",
+
+                }
+
+                sheet_entity_json['fileExtraResult'].append(entity_json_month)
+                sheet_entity_json['fileExtraResult'].append(entity_json_year)
+                sheet_entity_json['fileExtraResult'].append(entity_timely_json_month)
+                sheet_entity_json['fileExtraResult'].append(entity_timely_json_year)
+
+        return sheet_entity_json
+
+
+    def extra_raw_data_from_VAT_excel(cls):
+        cls.format_type = 'VAT'
+
+        sheet_entity_json = {}
+        pwd = os.path.dirname(__file__)
+        with open(pwd + '/script/' + cls.type + "_VATextraScript.json") as f:
+            json_data = json.load(f)
+        start_row = json_data['start_row']
+        end_row = json_data['end_row']
+        remove_columns = json_data['remove_column']
+        cls.remove_columns = remove_columns
+
+
+        df = pd.read_excel("media/" +cls.filename, encoding='gbk')
+        df = df.loc[int(start_row):int(end_row)]
+
+        column_name_list = list(df.columns.values.tolist())
+        df = df.rename(columns={
+            column_name_list[0]: 'column0',
+            column_name_list[1]: 'column1',
+            column_name_list[2]: 'column2',
+            column_name_list[3]: 'column3',
+            column_name_list[4]: 'column4',
+            column_name_list[5]: 'column5',
+            column_name_list[6]: 'column6'
+        })
+        # df.loc[-1] = [column_name_list[0], column_name_list[1], column_name_list[2],
+        #               column_name_list[3], column_name_list[4], column_name_list[5], column_name_list[6]
+        #               ]
+        # df.index = df.index + 1
+        # df = df.sort_index()
         for i in cls.remove_columns:
             df.drop(df.columns[i], axis=1, inplace=True)
         sheet_entity_json['fileExtraResult'] = []
@@ -840,3 +929,5 @@ class Extra(object):
             print(e)
 
         return sheet_entity_json
+
+

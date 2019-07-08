@@ -20,23 +20,34 @@ entity_map = {
 vat_entity_map = {
     "(一)按适用税率计税销售额": "current_taxable_sales",
     "(一)按适用税率征税销售额": "current_taxable_sales",
+    "（一）按适用税率计税销售额":"current_taxable_sales",
+    "其中：应税货物销售额":"cargo_taxable_sale",
     "其中:应税货物销售额": "cargo_taxable_sale",
     "应税劳务销售额": "services_taxable_sales",
     "纳税检查调整的销售额": "adjusted_after_tax_inspection_sales",
     "(二)按简易办法计税销售额": "simple_taxable_sales",
+    "（二）按简易办法计税销售额":"simple_taxable_sales",
+
     "(二)按简易征收办法征税销售额": "simple_taxable_sales",
     "其中:纳税检查调整的销售额": "simple_adjusted_after_tax_inspection_sales",
+    "其中：纳税检查调整的销售额":"simple_adjusted_after_tax_inspection_sales",
+    "（三）免、抵、退办法出口销售额":"tax_free_export_sales",
     "(三)免、抵、退办法出口销售额": "tax_free_export_sales",
     "(三)免、抵、退办法出口销": "tax_free_export_sales",
+    "（三）免、抵、退办法出口货物销售额":"tax_free_export_sales",
     "(四)免税销售额": "tax_free_sales",
+    "（四）免税销售额": "tax_free_sales",
+    "其中：免税货物销售额":"cargo_tax_free_sales",
     "其中:免税货物销售额": 'cargo_tax_free_sales',
     "免税劳务销售额": "services_tax_free_sales",
+
     "销项税额": "output_tax",
     "进项税额": "income_tax",
     "上期留抵税额": "previous_term_retained_tax",
     "进项税额转出": "transfer_out_of_input_tax",
     "免、抵、退应退税额": "tax_free_return_tax",
     "按适用税率计算的纳税检查应补缴税额": "applicable_adjusted_after_inspection_tax",
+    "按适用税率计算的纳税检查调整应补缴税额":"applicable_adjusted_after_inspection_tax",
     "应抵扣税额合计": "suppose_deduction_sum_tax",
     "应抵扣税额合计17=12+13-14-15+16": "suppose_deduction_sum_tax",
     "应抵扣税额合计(12+13-14-15+16)": "suppose_deduction_sum_tax",
@@ -54,18 +65,27 @@ vat_entity_map = {
     "应纳税额合计": "payable_sum_tax",
     "应纳税额合计(24=19+21-23)": "payable_sum_tax",
     "期初未缴税额(多缴为负数)": "beginning_term_back_tax",
+    "期初未缴税额（多缴为负数）" :"beginning_term_back_tax",
+
     "实收出口开具专用缴款书退税额": "actual_export_receipt_covering_warrant_return_tax",
     "实收出口开具专用缴款书退税": "actual_export_receipt_covering_warrant_return_tax",
     "本期已缴税额": "current_term_paid_tax",
     "本期已缴税额(27=28+29+30+31)": "current_term_paid_tax",
     "分次预缴税额": "stage_prepaid_tax",
+    "①分次预缴税额":"stage_prepaid_tax",
     "1分次预缴税额": "stage_prepaid_tax",
     "2出口开具专用缴款书预缴税额": "export_receipt_covering_warrant_return_tax",
+    "②出口开具专用缴款书预缴税额":"export_receipt_covering_warrant_return_tax",
+    "③本期缴纳上期应纳税额":"current_term_pay_previous_term_payable_tax",
     "3本期缴纳上期应纳税额": "current_term_pay_previous_term_payable_tax",
+    "④本期缴纳欠缴税额":"current_term_pay_arrears_tax",
     "4本期缴纳欠缴税额": "current_term_pay_arrears_tax",
+
     "期末未缴税额(多缴为负数)": "end_term_back_tax",
+    "期末未缴税额（多缴为负数）":"end_term_back_tax",
     "期末未缴税额(多缴为负数)32=24+25+26-27": "end_term_back_tax",
     "其中:欠缴税额(≥0)": "end_term_arrears_tax",
+    "其中：欠缴税额（≥0）":"end_term_arrears_tax",
     "其中:欠缴税额(>=0)33=25+26-27": "end_term_arrears_tax",
     "本期应补(退)税额": "current_term_return_tax",
     "本期应补(退)税额34=24-28-29": "current_term_return_tax",
@@ -287,6 +307,16 @@ area_mapping = {
     "baotou": "baotou",
     "xinjiang": "xinjiang",
     "taian": "taian",
-    "shanxi": "shanxi"
+    "shanxi": "shanxi",
+    "fushun": "fushun",
+    "guangxi": "guangxi",
+    "haerbing": "haerbing",
+    "langfang": "langfang",
+    "kaifeng": "kaifeng",
+    "zhenzhou":"kaifeng"
+
+
+
+
 
 }

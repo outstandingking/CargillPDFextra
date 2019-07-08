@@ -29,23 +29,29 @@ def vat_pdf_extra(request):
 
     file = data.get('file', None)
     # 兼容PDF和pdf
-    file.name = file.name.replace('PDF', 'pdf')
-
+    file.name = file.name.lower()
+    if '.excel' or '.xls' in file.name:
+        file_type = 'excel'
+    else:
+        file_type = 'pdf'
 
     try:
         pdfExtra = PdfExtraModel.objects.create(type=type, format=format, file=data.get('file'))
         remove_columns = []
         remove_rows = []
         entity_pair_setting = constants.vat_entity_map
-
+  
         if format == 'VAT':
             extraE = Extra(pdfExtra.file.url.encode('gbk').decode('gbk'), pdfExtra.file.name, [1,],
-                           entity_pair_setting, 'PDF', type, company_name_column_index=None,
+                           entity_pair_setting, file_type, type, company_name_column_index=None,
                            sheetNamelist=None, company_name=None)
+        if file_type == 'pdf':
+                data = extraE.extra_raw_data_from_VAT_PDF()
+        if file_type == 'excel':
+                data = extraE.extra_raw_data_from_VAT_excel()
 
-            data = extraE.extra_raw_data_from_VAT_PDF()
-            pdfExtra.result = data
-            pdfExtra.save()
+        pdfExtra.result = data
+        pdfExtra.save()
 
         if format =='VAT1':
             extraE = Extra(pdfExtra.file.url.encode('gbk').decode('gbk'), pdfExtra.file.name, remove_columns,
