@@ -402,7 +402,7 @@ class Extra(object):
         fp.close()
         fp2.close()
         subprocess.check_call('sh ' + newscriptFile, shell=True)
-        df = pd.read_csv("temp/" + csv_path, encoding='gbk')
+        df = pd.read_csv("temp/" + csv_path, encoding='gbk',header=None)
         column_name_list = list(df.columns.values.tolist())
         df = df.rename(columns={
             column_name_list[0]: 'column0',
@@ -412,11 +412,11 @@ class Extra(object):
             column_name_list[4]: 'column4',
             column_name_list[5]: 'column5'
         })
-        df.loc[-1] = [column_name_list[0], column_name_list[1], column_name_list[2],
-                      column_name_list[3], column_name_list[4], column_name_list[5]
-                      ]
-        df.index = df.index + 1
-        df = df.sort_index()
+        # df.loc[-1] = [column_name_list[0], column_name_list[1], column_name_list[2],
+        #               column_name_list[3], column_name_list[4], column_name_list[5]
+        #               ]
+        # df.index = df.index + 1
+        # df = df.sort_index()
         for i in cls.remove_columns:
             df.drop(df.columns[i], axis=1, inplace=True)
         sheet_entity_json['fileExtraResult'] = []
