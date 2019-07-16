@@ -32,11 +32,11 @@ def vat_pdf_extra(request):
     file.name = file.name.lower()
     if '.excel' in file.name or '.xls' in file.name:
         file_type = 'excel'
-    if '.pdf'in file.name  or '.PDF' in file.name:
+    if '.pdf'in file.name or '.PDF' in file.name:
         file_type = 'pdf'
 
     try:
-        pdfExtra = PdfExtraModel.objects.create(type=type, format=format, file=data.get('file'))
+        pdfExtra = PdfExtraModel.objects.create(type=type, format=format, file=file)
         remove_columns = []
         remove_rows = []
         entity_pair_setting = constants.vat_entity_map

@@ -103,12 +103,13 @@ class Extra(object):
 
     def format_value(self, value):
         if type(value) is float:
-            return str(value)
+            if str(value) != 'nan':
+                return str(value)
         try:
             value = str(float(value.replace(",", "")))
             return value
         except:
-            return '0'
+            return '0.0'
 
     def get_sheet_name(cls, sheet):
         unexpect_str_list = 'abcdefghijklmnopqrst1234567890()ABCDEFGHIJKLMOPQRSTUVWXYZ:'
@@ -404,6 +405,7 @@ class Extra(object):
         subprocess.check_call('sh ' + newscriptFile, shell=True)
         df = pd.read_csv("temp/" + csv_path, encoding='gbk',header=None)
         column_name_list = list(df.columns.values.tolist())
+        print (column_name_list)
         df = df.rename(columns={
             column_name_list[0]: 'column0',
             column_name_list[1]: 'column1',
