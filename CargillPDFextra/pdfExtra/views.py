@@ -1,14 +1,17 @@
-from django.shortcuts import render
+import os
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 
+from . import utils
 from . import constants
 from .models import PdfExtraModel
 
 from .extra import Extra
 from rest_framework.response import Response
-
+import time
+import traceback
+import requests
 
 @api_view(['POST'])
 def vat_pdf_extra(request):
@@ -16,11 +19,10 @@ def vat_pdf_extra(request):
 
     type = data.get('type', None)
 
-    try:
-        type = constants.area_mapping[type]
+    type_object = utils.return_type_standard(type)
 
-    except:
-        return Response(data={'error': 'type 不在mapping列表里'}, status=status.HTTP_400_BAD_REQUEST)
+    type = type_object.get('type_value')
+    type_standard = type_object.get('type_standard')
 
     format = data.get('format', None)
 
@@ -40,12 +42,28 @@ def vat_pdf_extra(request):
         remove_columns = []
         remove_rows = []
         entity_pair_setting = constants.vat_entity_map
-  
+        pdf_source_path =pdfExtra.file.url.encode('gbk').decode('gbk')
+
         if format == 'VAT':
-            extraE = Extra(pdfExtra.file.url.encode('gbk').decode('gbk'), pdfExtra.file.name, [1,],
+            extraE = Extra(pdf_source_path, pdfExtra.file.name, [1,],
                            entity_pair_setting, file_type, type, company_name_column_index=None,
                            sheetNamelist=None, company_name=None)
         if file_type == 'pdf':
+            if type_standard == 'xfaPDF' :
+                pdf_ab_source_path = os.getcwd() + '/'+pdf_source_path
+
+                target_pdf = pdf_source_path.replace('.pdf','_format.pdf')
+                target_ab_pdf_path = os.getcwd() + '/'+target_pdf
+                lience_key = 'itextkey.xml'
+                url = 'http://127.0.0.1:8005/readxfa'
+                data = {'source_pdf': pdf_ab_source_path, 'target_pdf':target_ab_pdf_path,"lienceKey":lience_key}
+                e_r = requests.post(url, data)
+                if e_r.status_code is status.HTTP_200_OK:
+                    extraE.filePath = target_pdf
+                    extraE.filename = extraE.filename.replace(".pdf","_format.pdf")
+                    extraE.remove_columns = []
+                else:
+                    Response(data={'error': '解析失败,xfapdf转换失败'}, status=status.HTTP_400_BAD_REQUEST)
                 data = extraE.extra_raw_data_from_VAT_PDF()
         if file_type == 'excel':
                 data = extraE.extra_raw_data_from_VAT_excel()
@@ -75,7 +93,7 @@ def vat_pdf_extra(request):
 
 
     except Exception as e:
-        print(e)
+        traceback.print_exc()
         return Response(data={'error': '解析失败'}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(data=data)

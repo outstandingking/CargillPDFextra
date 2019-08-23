@@ -380,10 +380,8 @@ class Extra(object):
 
         return all_entitys
 
-
     def extra_raw_data_from_VAT_PDF(cls):
         cls.format_type = 'VAT'
-
         sheet_entity_json = {}
         pwd = os.path.dirname(__file__)
         remove_columns = cls.remove_columns
@@ -391,7 +389,6 @@ class Extra(object):
         infos = fp.readlines()
         fp.seek(0, 0)
         filename = cls.filename.split('.')[0]
-
         newscriptFile = 'temp/script/' + cls.type + '_VATextraScript' + '_' + filename + '.sh'
         fp2 = open(newscriptFile, "w", encoding='utf-8')
         time = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
@@ -406,14 +403,10 @@ class Extra(object):
         df = pd.read_csv("temp/" + csv_path, encoding='gbk',header=None)
         column_name_list = list(df.columns.values.tolist())
         print (column_name_list)
-        df = df.rename(columns={
-            column_name_list[0]: 'column0',
-            column_name_list[1]: 'column1',
-            column_name_list[2]: 'column2',
-            column_name_list[3]: 'column3',
-            column_name_list[4]: 'column4',
-            column_name_list[5]: 'column5'
-        })
+        column_len=len(column_name_list)
+        for i in range(column_len):
+            df = df.rename(columns ={column_name_list[i]:'column'+str(i)})
+
         # df.loc[-1] = [column_name_list[0], column_name_list[1], column_name_list[2],
         #               column_name_list[3], column_name_list[4], column_name_list[5]
         #               ]
